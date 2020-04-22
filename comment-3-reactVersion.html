@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!--宽高为可视区域宽高，禁止缩放-->
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <!--X-UA-Compatible是IE8的一个专有meta属性-->
+  <!--Edge 模式告诉 IE 以最高级模式渲染文档，也就是任何 IE 版本都以当前版本所支持的最高级标准模式渲染，避免版本升级造成的影响。-->
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Comment3-react</title>
+  <link rel="stylesheet" href="./main.css">
+</head>
+<body>
+  <div class="header">❀徐山青的小花园❀</div>
+  <div id="root"></div>
+
+  <script type="text/javascript" src="./js/react.development.js"></script>
+  <script type="text/javascript" src="./js/react-dom.development.js"></script>
+  <script type="text/javascript" src="./js/babel.min.js"></script>
+  <script type="text/javascript" src="./js/prop-types.js"></script>
+  <script type="text/babel">
+    // 1. App 是父组件
+    class App extends React.Component{
+      constructor(props){
+        super(props);
+        this.state = {
+          //comments是多个评论li，是一个数组。每个评论li就是comment，类型是一个对象。
+          comments:[
+            {username:"xxx",content:"从来如此，便对么？"},
+            {username:"yyy",content:"人必生活著，爱才有所附丽。"},
+            {username:"zzz",content:"万家墨面没蒿莱，敢有歌吟动地哀。心事浩茫连广宇，于无声处听惊雷。"}
+          ],
+        };
+
+        this.updateComments = this.updateComments.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
+      }
+
+      updateComments(one_comment){
+        //获取
+        const {comments} = this.state;
+        //处理，新增项目放在数组开头
+        comments.unshift(one_comment);
+        //更新
+        this.setState({comments});
+      }
+
+      deleteComment(one_comment){
+        const {comments} = this.state;
+        const index = comments.indexOf(one_comment);
+        comments.slice(index,1);
+        this.setState(comments);
+      }
+
+
+      render(){
+        const {comments} = this.state;
+        return (
+          <div>
+            <CommentAdd updateComments={this.updateComments}/>
+            <CommentList comments={comments} deleteComment={this.deleteComment}/>
+          </div>
+        );
+      }
+    }
+
+
+
+    // 2. CommentAdd 是子组件，用于输入，单击按钮
+    class CommentAdd extends React.Component{
+      constructor(props){
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+      }
+
+      handleClick(){
+        //(1) 先读取文本框中输入的数据，trim()可以去掉输入值前后空格
+        const nameInput = this.nameInput.value;
+        const textInput = this.textInput.value;
+        //（2） 检查合法性，如果是空字符串：
+        if (!nameInput && !textInput){
+          return null;
+        }
+        //(3) 添加一个comment,类型为对象。因此调用APP中的updateComments()方法
+        this.props.updateComments({username:nameInput,content:textInput});
+        //（4）清除输入，文本框恢复空白
+        this.nameInput.value = '';
+        this.textInput.value = '';
+      }
+
+      render(){
+        const {comments} = this.props;
+
+        return (
+          <div className="left_con">
+            <div  className="form_con">
+              <label htmlFor="nameInput">用户名</label>
+              <br/>
+              <input id="nameInput" ref={input => this.nameInput = input } type="text" placeholder="#用户名"/>
+              <br/>
+              <br/>
+              <label htmlFor="textInput">评论内容</label>
+              <br/>
+              <textarea id="textInput" ref={input => this.textInput = input } cols="30" rows="10" placeholder="#输入评论..."></textarea>
+              <br/>
+              <input id="subBtn" onClick={this.handleClick} type="submit" value="发 表"/>
+            </div>
+          </div>
+        );
+      }
+    }
+    //<CommentAdd />组件有1个属性，因此传入的数据要声明一下：
+    CommentAdd.Protypes = {
+      comments: PropTypes.array.isRequired,
+      updateComments:PropTypes.func.isRequired,
+    };
+
+
+
+    // 3. CommentList 是子组件，用于显示评论内容
+    class CommentList extends React.Component{
+      render(){
+        const {comments}= this.props;
+        return (
+          <div className="right_con">
+            <div className="ul_title">评论查看：</div>
+            <ul id="ul_con">
+              {
+                comments.map((c,index) => <CommentItem comment = {c} key={index}/> )
+              }
+
+            </ul>
+          </div>
+        );
+      }
+    }
+
+    // <CommentList />组件有1个属性，要声明以下，CommentList接收的要为一个数组
+    CommentList.Protypes = {
+      comments: PropTypes.array.isRequired,
+
+    };
+
+
+
+
+    class CommentItem extends React.Component{
+      constructor(props){
+        super(props);
+        this.handleDelete = this.handleDelete.bind(this);
+      }
+
+
+      handleDelete(){
+        //(1) 先读取文本框中输入的数据，trim()可以去掉输入值前后空格
+        const {comment} =this.props;
+
+
+        //(2) 添加一个comment,类型为对象。因此调用APP中的updateComments()方法
+        this.props.deleteComment({comment});
+      }
+
+      render(){
+        const {comment} =this.props;
+        return (
+          <li>
+            <p className="p1_user">{comment.username}：</p>
+            <p className="p2_text">{comment.content}</p>
+            <button className="del_btn" onClick={this.handleDelete}>删 除</button>
+          </li>
+
+        );
+      }
+
+    }
+    //仅仅是 单个 评论，是一个对象
+    CommentItem.Protypes = {
+      comment: PropTypes.object.isRequired,
+    };
+
+
+
+
+
+
+    ReactDOM.render(<App />,document.getElementById("root"));
+
+
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
