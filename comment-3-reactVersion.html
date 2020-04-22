@@ -46,10 +46,11 @@
         this.setState({comments});
       }
 
-      deleteComment(one_comment){
+      //deleteComment 是CommentList 的属性，怎么让CommentItem组件也可以看到？这是关键！
+      deleteComment(index){
         const {comments} = this.state;
-        const index = comments.indexOf(one_comment);
-        comments.slice(index,1);
+        //根据索引，运用数组的splice方法就可以删除指定成员
+        comments.splice(index,1);
         this.setState(comments);
       }
 
@@ -121,13 +122,18 @@
     // 3. CommentList 是子组件，用于显示评论内容
     class CommentList extends React.Component{
       render(){
-        const {comments}= this.props;
+        const {comments,deleteComment}= this.props;
+        //如果评论删完了，会显示h2 标签提示。
+        const display = comments.length===0 ? 'block':'none';
+
+        //在CommentItem中添加了deleteComment属性，因此和App组件对接上了。可以完成删除功能。
         return (
           <div className="right_con">
             <div className="ul_title">评论查看：</div>
+            <h2 style={{display}}>没有评论，请在左边添加评论哦！</h2>
             <ul id="ul_con">
               {
-                comments.map((c,index) => <CommentItem comment = {c} key={index}/> )
+                comments.map((c,index) => <CommentItem comment = {c} key={index} index={index} deleteComment={deleteComment}/> )
               }
 
             </ul>
@@ -139,7 +145,7 @@
     // <CommentList />组件有1个属性，要声明以下，CommentList接收的要为一个数组
     CommentList.Protypes = {
       comments: PropTypes.array.isRequired,
-
+      deleteComment:PropTypes.func.isRequired,
     };
 
 
@@ -153,12 +159,13 @@
 
 
       handleDelete(){
-        //(1) 先读取文本框中输入的数据，trim()可以去掉输入值前后空格
-        const {comment} =this.props;
 
+        const {comment,deleteComment,index} =this.props;
 
-        //(2) 添加一个comment,类型为对象。因此调用APP中的updateComments()方法
-        this.props.deleteComment({comment});
+        if(window.confirm(`确定要删除${comment.username}的评论吗？`)){
+          deleteComment(index);
+        }
+
       }
 
       render(){
@@ -177,6 +184,8 @@
     //仅仅是 单个 评论，是一个对象
     CommentItem.Protypes = {
       comment: PropTypes.object.isRequired,
+      deleteComment:PropTypes.func.isRequired,
+      index:PropTypes.number.isRequired,
     };
 
 
