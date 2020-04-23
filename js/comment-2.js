@@ -48,6 +48,7 @@ window.onload = function () {
     var submitComment = confirm("确定要发表评论[ " + newCommentText + " ]吗？");
     if (submitComment) {
       ul.appendChild(newLi);
+      //表单内容清除
       form.reset();
     }
 

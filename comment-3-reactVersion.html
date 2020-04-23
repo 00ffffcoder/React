@@ -76,15 +76,20 @@
       }
 
       handleClick(){
-        //(1) 先读取文本框中输入的数据，trim()可以去掉输入值前后空格
+        //(1) 先读取文本框中输入的数据
         const nameInput = this.nameInput.value;
         const textInput = this.textInput.value;
         //（2） 检查合法性，如果是空字符串：
-        if (!nameInput && !textInput){
+        if (!nameInput || !textInput){
+          window.alert("用户名和评论内容都不能为空哦！");
           return null;
         }
-        //(3) 添加一个comment,类型为对象。因此调用APP中的updateComments()方法
-        this.props.updateComments({username:nameInput,content:textInput});
+
+        if (confirm("确定要发表评论[ " + textInput + " ]吗？")){
+          //(3) 添加一个comment,类型为对象。因此调用APP中的updateComments()方法
+          this.props.updateComments({username:nameInput,content:textInput});
+        }
+
         //（4）清除输入，文本框恢复空白
         this.nameInput.value = '';
         this.textInput.value = '';
@@ -112,8 +117,7 @@
       }
     }
     //<CommentAdd />组件有1个属性，因此传入的数据要声明一下：
-    CommentAdd.Protypes = {
-      comments: PropTypes.array.isRequired,
+    CommentAdd.propTypes = {
       updateComments:PropTypes.func.isRequired,
     };
 
@@ -135,7 +139,6 @@
               {
                 comments.map((c,index) => <CommentItem comment = {c} key={index} index={index} deleteComment={deleteComment}/> )
               }
-
             </ul>
           </div>
         );
@@ -143,7 +146,7 @@
     }
 
     // <CommentList />组件有1个属性，要声明以下，CommentList接收的要为一个数组
-    CommentList.Protypes = {
+    CommentList.propTypes = {
       comments: PropTypes.array.isRequired,
       deleteComment:PropTypes.func.isRequired,
     };
@@ -182,7 +185,7 @@
 
     }
     //仅仅是 单个 评论，是一个对象
-    CommentItem.Protypes = {
+    CommentItem.propTypes = {
       comment: PropTypes.object.isRequired,
       deleteComment:PropTypes.func.isRequired,
       index:PropTypes.number.isRequired,
