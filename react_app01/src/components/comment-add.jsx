@@ -32,13 +32,11 @@ export default class CommentAdd extends Component{
     }
 
     //（4）清除输入，文本框恢复空白
-
-    // console.log(comment);
     this.setState({
       nameInput:'',
       textInput:''
     });
-    // console.log(this.nameInput,this.textInput);
+
   };
 
   handleNameChange = (event) => {
