@@ -35,3 +35,10 @@
 		而之前comment-3-reactVersion中对应的是非受控组件写法；
 ```
 
+### 20200425
+
+```
+修改：原来src文件夹改名为src-comment-originVersion,
+新增：新增src文件夹中，组件代码中，使用了 pubsub-js 工具库实现组件间通信，简化了代码。
+```
+

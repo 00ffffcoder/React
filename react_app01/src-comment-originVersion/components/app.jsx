@@ -1,9 +1,8 @@
 import React,{Component} from 'react';
-import PubSub from 'pubsub-js';
-
 
 import CommentAdd from './comment-add';
 import CommentList from './comment-list';
+
 
 
 // export default用于导出常量、函数、文件、模块
@@ -19,13 +18,6 @@ export default class App extends Component{
       {username:"zzz",content:"万家墨面没蒿莱，敢有歌吟动地哀。心事浩茫连广宇，于无声处听惊雷。"}
     ],
   };
-
-  componentDidMount(){
-    //订阅消息（deleteComment），执行删除函数
-    PubSub.subscribe("deleteCo", (msg,index) => {
-      this.deleteComment(index);
-    })
-  }
 
   //功能一：添加评论的函数方法
   updateComments = (one_comment) => {
@@ -52,7 +44,7 @@ export default class App extends Component{
       <div>
         <div className="header">❀徐山青的小花园❀</div>
         <CommentAdd updateComments={this.updateComments}/>
-        <CommentList comments={comments} />
+        <CommentList comments={comments} deleteComment={this.deleteComment}/>
       </div>
     );
 
