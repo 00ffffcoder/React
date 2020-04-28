@@ -56,11 +56,55 @@
 
 **修改：**
 
-		1. src文件夹：【评论区网页项目】，使用redux,  react-redux 进行状态管理，实现异步加载。配合redux-devtools-extension和redux-devtools谷歌插件进行状态查看和调试。
+​	1. src文件夹：【评论区网页项目】，使用redux,  react-redux 进行状态管理，实现异步加载。配合redux-devtools-extension和redux-devtools谷歌插件进行状态查看和调试。
+
   		2. 原来的src文件夹改为：src04-react router demo文件夹
 
 **增加：**
 
-	1. src05-react-redux demo1文件夹: 【react-redux demo】计数器demo
+1. src05-react-redux demo1文件夹: 【react-redux demo】计数器demo
+
  	2. src06-counter-react-redux文件夹：【react-redux demo】计数器demo，添加了异步加载。
+
+### 20200428-23：48添加说明：
+
+**关于使用脚手架搭建react项目引入antd-mobile后定制主题无效的说明**
+
+1. 用这个方法：https://www.jianshu.com/p/7097348cd900
+
+   创建一个 `config-overrides.js`，用于修改默认配置：
+
+   ```csharp
+   const { override, fixBabelImports, addLessLoader } = require('customize-cra');
+   
+   module.exports = override(
+       addLessLoader({
+         javascriptEnabled: true,
+         modifyVars: {'@brand-primary': '#1DA57A'},
+       }),
+       fixBabelImports('import', {
+         libraryName: 'antd-mobile',
+         libraryDirectory: 'es',
+         style: true,
+       }),
+   );
+   ```
+
+   网上最多的就是这种方法，但结果报错：
+
+   ```
+   ValidationError: Invalid options object. Less Loader has been initialized using an options object that does not match the API schema.options has an unknown property 'source'. 
+   These properties are valid: object { lessOptions?, prependData?, appendData?, sourceMap? }
+   ```
+
+   
+
+   2. 用老方法： 改写`config-overrides.js`，用到了injectBabelPlugin函数，但报错：injectBabelPlugin函数在依赖包react-app-rewired 2.0之后的版本已经不再被支持，新版本支持的是依赖包customize-cra。
+
+      依旧用老方法，请看 https://blog.csdn.net/D1sappearRy/article/details/103081743
+
+   3. 如果仅仅是想实现按需打包功能，应用新版本的处理方法（即官网对应方法）即可。
+   4. 官网的定制主题方法，试了后无效。
+
+
 
