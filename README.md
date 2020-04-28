@@ -50,3 +50,17 @@
    - src03-react router demo文件夹：【react 路由demo】, 为前端路由，实现多级路由跳转功能。
    - src文件夹： 【React UI demo】, 使用antd-mobile UI框架进行练习。
 
+------
+
+### 20200428-09：14更新
+
+**修改：**
+
+		1. src文件夹：【评论区网页项目】，使用redux,  react-redux 进行状态管理，实现异步加载。配合redux-devtools-extension和redux-devtools谷歌插件进行状态查看和调试。
+  		2. 原来的src文件夹改为：src04-react router demo文件夹
+
+**增加：**
+
+	1. src05-react-redux demo1文件夹: 【react-redux demo】计数器demo
+ 	2. src06-counter-react-redux文件夹：【react-redux demo】计数器demo，添加了异步加载。
+

@@ -8,87 +8,117 @@
   height: 200px;
   font:italic bold 55px/200px arial,sans-serif;
   background-color: #efedf0;
-  text-indent: 100px;
+  text-indent: 230px;
 }
 
-/*左边导航部分*/
+/*左边评论添加部分*/
 .left_con{
   float: left;
-  width: 30%;
-  height: 800px;
-  background-color: pink;
-  /*display: flex;*/
-  /*justify-content: center;*/
+  width: 35%;
+  height: 500px;
 }
-.nav_con,.content_con{
-  width: 70%;
-  height: 200px;
+
+.form_con{
+  float: right;
+  margin-right:50px;
+  margin-top: 50px;
+  width: 400px;
+  height: 500px;
+}
+
+.form_con label{
+  height: 40px;
+  font: normal bold 20px/40px arial,sans-serif;
+}
+
+#nameInput, #textInput{
+  width: 400px;
   border: 1px solid #eee;
-  text-align: center;
-  margin: 20px auto;
+  border-radius: 5px;
+  font-size: 20px;
+  text-indent: 10px;
 }
-.title{
-  float: left;
-  text-decoration: none;
-  width: 80%;
-  height: 50px;
-  font:normal 25px/50px arial,sans-serif;
-  border-bottom:1px solid #eee;
-  text-align: center;
-  margin: 0 40px;
+
+#nameInput{
+  height: 40px;
 }
-.activeClass{
-  color: red;
+
+#subBtn{
+  float: right;
+  height: 33px;
+  width: 60px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background-color: #fff;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 33px;
 }
 
 
-/*右边导航部分*/
+/*右边评论查看部分*/
 .right_con{
   float: right;
-  width: 70%;
+  width: 65%;
+  height: 500px;
+}
+
+.right_con h2{
+  color: #fb7299;
+}
+
+#ul_con{
+  list-style: none;
   height: 800px;
-  background-color: #bfa;
+  width: 800px;
+
 }
-.content_title{
-  width: 80%;
+
+
+.ul_title{
+  margin-top: 30px;
+  height: 60px;
+  font: normal bold 30px/60px arial,sans-serif;
+}
+
+
+#ul_con li{
   height: 100px;
-  font:bold 50px/100px arial,sans-serif;
-  border-bottom:1px solid #eee;
-  text-align: center;
-  margin-left: 10%;
+  width: 800px;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  overflow-y: auto;
 }
 
-.second_title{
-  width: 80%;
-  height: 100px;
-  font:normal 25px/100px arial,sans-serif;
-  border-bottom:1px solid #eee;
-  margin-left: 10%;
-  list-style: none;
+.p1_user{
+  font-size:25px;
+  text-indent: 10px;
+  font-style: italic;
+}
+.p2_text{
+  margin-top: 10px;
+  font-size:20px;
+  text-indent: 75px;
 }
 
-.second_title li{
-  float: left;
-  margin-right: 20px;
-}
-.no_line{
-  text-decoration: none;
-}
-
-.news_ul,.message_ul{
-  width: 80%;
-  border-bottom:1px solid #eee;
-  margin-left: 10%;
-}
-.news_ul li{
-  height: 40px;
-  font:normal 20px/40px arial,sans-serif;
-  text-indent: 5%;
+.del_btn{
+  float: right;
+  width: 50px;
+  height: 25px;
+  font-size: 16px;
+  line-height: 25px;
+  margin-right: 10px;
+  background-color: #fff;
+  border:1px solid #eee;
+  color: blue;
+  border-radius: 4px ;
+  cursor: pointer;
 }
 
-.message_ul li{
-  list-style: none;
-  height: 40px;
-  font:normal 20px/40px arial,sans-serif;
-  text-indent: 10%;
+#subBtn:hover,.del_btn:hover{
+  background-color: #fb7299;
+  color: #fff;
+  border:0;
 }
