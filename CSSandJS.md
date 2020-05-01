@@ -549,6 +549,33 @@ DOM树完全和html标签一一对应，但是渲染树会忽略掉不需要渲�
 
 
 
+## 主流模块规范
+
+在es6以前，还没有提出一套官方的规范,从社区和框架推广程度而言,目前通行的javascript模块规范有两种：CommonJS 和 AMD。
+
+https://www.cnblogs.com/fps2tao/p/10823468.html
+
+### CommonJS规范
+
+2009年，美国程序员Ryan Dahl创造了node.js项目，将javascript语言用于服务器端编程。这标志”Javascript模块化编程”正式诞生。
+
+在CommonJS中,暴露模块使用module.exports和exports。
+
+在CommonJS中，有一个全局性方法require()，用于加载模块。假定有一个数学模块math.js，就可以像下面这样加载。
+
+```
+var math = require('math');
+```
+
+然后，就可以调用模块提供的方法：
+
+```
+var math = require('math');
+math.add(2,3); // 5
+```
+
+正是由于CommonJS 使用的require方式的推动，才有了后面的AMD、CMD 也采用的require方式来引用模块的风格
+
 # **css相关**
 
 ### **1.盒模型**
