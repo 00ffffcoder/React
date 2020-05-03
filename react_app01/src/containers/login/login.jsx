@@ -35,12 +35,12 @@ class Login extends Component{
 
 
   render(){
-    const {msg,redirectTo} = this.props.user;
+    const {msg,type,_id} = this.props.user;
 
-    console.log('msg,redirectTo:',msg,redirectTo);
-    //如果注册成功，返回的redirectTo 就有值，直接跳转到个人信息完善界面
-    if (redirectTo){
-      return <Redirect to={redirectTo} />
+    if (_id){
+      console.log('登录界面：this.props.user: ',this.props.user);
+      const path = type==='JobHunter'? '/jobhunterinfo':'/bossinfo';
+      return <Redirect to={path} />
     }
 
     return (

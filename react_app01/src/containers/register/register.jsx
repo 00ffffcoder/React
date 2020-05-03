@@ -55,11 +55,15 @@ class Register extends Component{
 
 
   render(){
-    const {msg,redirectTo} = this.props.user;
+    const {msg,type,_id} = this.props.user;
 
     //如果注册成功，返回的redirectTo 就有值，直接跳转到localhost:3000/ 界面，即main界面
-    if (redirectTo){
-      return <Redirect to={redirectTo} />
+    // if (redirectTo){
+    //   return <Redirect to={redirectTo} />
+    // }
+    if (_id){
+      const path = type==='JobHunter'? '/jobhunterinfo':'/bossinfo';
+      return <Redirect to={path} />
     }
 
     return (

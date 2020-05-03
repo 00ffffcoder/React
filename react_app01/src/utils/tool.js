@@ -16,21 +16,26 @@ BOSS --> /bossinfo
 *
 * */
 
-// export default function getRedirectPath(type,header) {
-//   let path='';
-//
-//   if (type==="JobHunter"){
-//     path = '/jobhunter';
-//   }else {
-//     path = '/boss';
-//   }
-//   if (!header){
-//     path += 'info';
-//   }
-//
-//   return path;
-//
-// }
+export default function getRedirectPath(type,header) {
+  let path='';
+
+  if (type==="JobHunter"){
+    path = '/jobhunter';
+  }else {
+    path = '/boss';
+  }
+  if (!header){
+    path += 'info';
+  }
+
+  return path;
+
+}
+
+
+
+/*
+
 export default function getRedirectPath(type) {
   let path='';
 
@@ -43,7 +48,7 @@ export default function getRedirectPath(type) {
   return path;
 
 }
-
+*/
 
 
 

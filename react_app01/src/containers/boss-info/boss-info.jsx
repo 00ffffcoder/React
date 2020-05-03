@@ -1,8 +1,12 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {NavBar,InputItem,TextareaItem,Button} from 'antd-mobile';
+import {Redirect} from 'react-router-dom';
+
 
 import HeaderSelector from '../../components/head-selector/head-selector';
+import {updateUser}  from '../../redux/actions';
+
 
 class BossInfo extends Component{
 
@@ -11,7 +15,8 @@ class BossInfo extends Component{
     post: '', // 职位
     info: '', // 个人或职位简介
     company: '', // 公司名称
-    salary: '' // 月薪
+    salary: '' ,// 月薪
+    _id:this.props.user._id
   };
 
   //获取头像text
@@ -27,13 +32,24 @@ class BossInfo extends Component{
     });
   };
 
-  //点击保存
+  //点击保存,数据保存到数据库
   bossSave = ()=>{
-    console.log('保存成功',this.state)
+    console.log('保存成功',this.state);
+    this.props.updateUser(this.state);
   };
 
 
   render(){
+    const {header,type} = this.props.user;
+    console.log('个人信息完善界面的this.props.user: ',this.props.user);
+
+    //如果完善信息成功，直接跳转到localhost:3000/BOSS界面
+    if (header){
+      const path = type==='JobHunter'? '/jobhunter':'/boss';
+      console.log('如果有header, this.props.user: ',this.props.user);
+      return <Redirect to={path} />
+    }
+
     return (
       <div>
         <NavBar mode='dark'>
@@ -56,8 +72,8 @@ class BossInfo extends Component{
 }
 
 export default connect(
-  state => ({}),
-  {}
+  state => ({user:state.user}),
+  {updateUser}
 )(BossInfo)
 
 

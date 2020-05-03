@@ -3,15 +3,18 @@
 //  2）data: 数据属性, 值类型任意, 可选属性
 
 //引入发送ajax请求的接口,这几个都是Promis对象
-import {reqRegister,reqLogin,} from '../api/index';
+import {reqRegister,reqLogin,reqUpdateUser} from '../api/index';
 
-import {AUTH_SUCCESS,ERROR_MSG} from './action-types'
+import {AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER} from './action-types'
 
 //同步action ： 返回成功响应
 const authSuccess = (user) => ({type:AUTH_SUCCESS, data:user});
-
 //同步action ： 返回错误信息
 const errorMsg = (msg) => ({type:ERROR_MSG, data:msg});
+//同步action ： 完善信息后，接收用户
+const receiveUser = (user) => ({type:RECEIVE_USER, data:user});
+//同步action ： 重置用户
+const resetUser = (msg) => ({type:RESET_USER, data:msg});
 
 
 
@@ -86,6 +89,22 @@ export const login = ({username,password}) => {
 
 
 
+// 请求更新用户信息的异步action
+export const updateUser = (user) => {
+  return async dispatch => {
+    const response = await reqUpdateUser(user);
+    const result = response.data;
+    console.log("response.data",result);
+
+    if (result.code===0){
+      //成功，分发 成功的同步action
+      dispatch(receiveUser(result.data));
+    }else {
+      //失败，分发 失败的同步action
+      dispatch(resetUser(result.msg));
+    }
+  };
+};
 
 
 
