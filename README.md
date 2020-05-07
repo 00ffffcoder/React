@@ -166,7 +166,7 @@
 
 ### 20200503-16：14更新
 
-登录界面： /login   
+​	登录界面： /login   
 
 ​	登录成功：
 
@@ -174,30 +174,55 @@
 this.props.user:  {_id: "5eae76abf95bc727842cb006", username: "user12", type: "JobHunter"}
 ```
 
-个人信息完善界面：
+​	个人信息完善界面：
 
 ```
 this.props.user:  {_id: "5eae76abf95bc727842cb006", username: "user12", type: "JobHunter"}
 ```
 
-问题1： 进入个人信息完善界面，填好信息，点击保存，立马跳回到登录界面，而且返回：
+​	问题1： 进入个人信息完善界面，填好信息，点击保存，立马跳回到登录界面，而且返回：
 
 ```
 response.data {code: 1, msg: "no user ID，请先登陆！"}
 ```
 
-个人信息完善界面的**this.props.user**变成：
+​	个人信息完善界面的**this.props.user**变成：
 
 ```
 this.props.user:  {username: "", type: "", msg: "no user ID，请先登陆！"}
 ```
 
-问题2：登录界面，登录成功后，浏览器未产生cookie，因此保存个人信息时，ajax请求里面无userid
+​	问题2：登录界面，登录成功后，浏览器未产生cookie，因此保存个人信息时，ajax请求里面无userid
 
 解决办法： 个人信息完善界面的state默认指定userid: this.props.user._id
 
-
-
 **功能3： 如果强行访问个人信息完善界，点击保存，后台提示先登录，自动返回登录界面**
 
-问题4： 个人信息完善界面 保存后，下次登录成功，直接跳转对应个人主页。要修改个人信息后续再做。
+​	问题4： 个人信息完善界面 保存后，下次登录成功，直接跳转对应个人主页。要修改个人信息后续再做。
+
+### 20200506-14：14更新
+
+​	1.问题： 安装socket.io失败npm ERR! Unexpected end of JSON input while parsing near '...gine.io/-/engine.io-0'
+
+​	解决办法：**清除cache**
+
+```
+npm cache clean --force
+```
+
+​	或者进入下面这个文件夹，把文件夹**npm-cache下的内容删除掉**
+
+
+​	路径：C:/Users/PC/AppData/Roaming/npm-cache
+
+### 20200507-19：23更新
+
+目前已实现功能:  
+
+```
+（1）注册/登录（与后台数据交互）；
+（2）boss/jobhunter主界面；
+（3）boss/jobhunter信息完善界面（与后台数据交互）；
+（4）boss/jobhunter个人中心页面；
+（5）多用户实时聊天界面，可发送文字，表情（与后台数据交互）
+```

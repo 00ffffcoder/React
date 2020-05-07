@@ -11,8 +11,10 @@ import Boss from '../boss/boss';
 import JobHunter from '../jobhunter/jobhunter';
 import Message from '../message/message';
 import Personal from '../personal/personal';
-import NotFound from '../../components/not-found/not-found'
-import NavFooter from '../../components/nav-footer/nav-footer'
+import NotFound from '../../components/not-found/not-found';
+import NavFooter from '../../components/nav-footer/nav-footer';
+import Chat from '../chat/chat';
+
 
 import getRedirectPath from '../../utils/tool';
 
@@ -79,7 +81,7 @@ class Main extends Component{
 
 
 
-    //得到当前的 nav
+    //得到当前的 nav。find() 方法返回通过测试（函数内判断）的数组的第一个元素的值。
     const currentNav = this.navList.find(nav => nav.path === pathname);
 
 
@@ -94,6 +96,8 @@ class Main extends Component{
           <Route path='/jobhunter' component={JobHunter}/>
           <Route path='/message' component={Message}/>
           <Route path='/personal' component={Personal}/>
+
+          <Route path='/chat/:userid' component={Chat}/>
           <Route component={NotFound}/>
         </Switch>
 

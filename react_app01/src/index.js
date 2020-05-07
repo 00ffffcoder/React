@@ -13,6 +13,8 @@ import Main from "./containers/main/main";
 
 import './components/index.css'
 
+// import './test/socketio_test'
+
 //Main 组件没指定path,是默认组件
 ReactDOM.render(
   <Provider store={store}>
