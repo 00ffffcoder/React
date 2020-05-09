@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {NavBar, List, InputItem, Grid,Icon} from 'antd-mobile';
 import {connect} from 'react-redux';
 
-import {sendMsg} from '../../redux/actions';
+import {sendMsg,readMsg} from '../../redux/actions';
 
 
 const Item = List.Item;
@@ -23,10 +23,19 @@ class Chat extends Component{
     // console.log(this.emojis)
   }
 
+
+
   // 初始显示聊天列表，一进来就显示到聊天记录最底部
   componentDidMount() {
-    window.scrollTo(0, document.body.scrollHeight)
+    window.scrollTo(0, document.body.scrollHeight);
+    //发请求更新消息的读取状态
+    this.props.readMsg(this.props.match.params.userid);
   }
+
+  componentWillUnmount() {
+    this.props.readMsg(this.props.match.params.userid)
+  }
+
   // 更新显示聊天列表，发送消息后，界面显示到最底部
   componentDidUpdate () {
     window.scrollTo(0, document.body.scrollHeight)
@@ -64,13 +73,14 @@ class Chat extends Component{
 
   render(){
     const {user} = this.props;
+    // console.log("chat.jsx中的this.props：",this.props);
     const {users,chatMsgs} = this.props.chat;  //chatMsgs 包含所有人的聊天信息，格式为id1_id2, 一定要过滤，选出我跟当前对方的聊天信息
 
     const myId = user._id; //我的id
     const targetId = this.props.match.params.userid; //聊天对方的id
 
     if(!users[targetId]) {  //如果users没有数据，页面为空
-     console.log('users没有数据，页面为空');
+      console.log('users没有数据，页面为空');
       return null
     }
 
@@ -98,7 +108,7 @@ class Chat extends Component{
                 );
               }else {//我发给对方的
                 return (
-                  <Item className='chat-me' extra='我'>
+                  <Item key={msg._id} className='chat-me' extra='我'>
                     {msg.content}
                   </Item>
                 )
@@ -147,5 +157,5 @@ class Chat extends Component{
 
 export default connect(
   state => ({user:state.user, chat: state.chat}),
-  {sendMsg}
+  {sendMsg,readMsg}
 )(Chat);

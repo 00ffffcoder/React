@@ -39,7 +39,7 @@ const receiveMsgList = ({users, chatMsgs, userid}) => ({type: RECEIVE_MSG_LIST, 
     {users, chatMsgs, userid}});
 
 //同步action ： 接收消息的同步 action
-const receiveMsg = (chatMsg, isToMe) => ({type: RECEIVE_MSG, data: {chatMsg, isToMe}});
+const receiveMsg = (chatMsg, userid) => ({type: RECEIVE_MSG, data: {chatMsg, userid}});
 
 //同步action ： 读取了消息的同步 action
 const msgRead = ({from, to, count}) => ({type: MSG_READ, data: {from, to, count}});
@@ -68,7 +68,7 @@ function initIO(dispatch,userid){
     //只有当chatMsg是与当前用户相关的消息，才会去分发同步action 保存消息
     io.socket.on('receiveMsg', (chatMsg) => {
       if(chatMsg.from===userid || chatMsg.to===userid) {
-        dispatch(receiveMsg(chatMsg, chatMsg.to === userid))
+        dispatch(receiveMsg(chatMsg,userid))
       }
     })
   }
@@ -110,7 +110,7 @@ export const register = (user) => {
     console.log("后台返回response.data:",result);
     //然后来判断返回的数据是 成功的还是 失败的
     if (result.code===0){
-      getMsgList(dispatch);  //写聊天模块才添加
+      getMsgList(dispatch,result.data._id);  //写聊天模块才添加
       //成功，分发 成功的同步action
       dispatch(authSuccess(result.data));
     }else {
@@ -136,6 +136,7 @@ export const login = ({username,password}) => {
 
 
     if (result.code===0){
+      getMsgList(dispatch,result.data._id);//写聊天模块才添加
       //成功，分发 成功的同步action
       dispatch(authSuccess(result.data));
     }else {
@@ -154,7 +155,7 @@ export const updateUser = (user) => {
     console.log("response.data",result);
 
     if (result.code===0){
-      getMsgList(dispatch);  //写聊天模块才添加
+      getMsgList(dispatch,result.data._id);  //写聊天模块才添加
       //成功，分发 成功的同步action
       dispatch(receiveUser(result.data));
     }else {
@@ -182,9 +183,8 @@ export const getUserList = (type)=>{
 
 //5. 发送聊天消息的异步 action
 export const sendMsg = ({from, to, content}) => {
-  return  dispatch => {
+  return async dispatch => {
     console.log('sendMsg：', {from, to, content});
-    initIO();
     io.socket.emit('sendMsg', {from, to, content});
   }
 };
@@ -205,3 +205,20 @@ async function getMsgList(dispatch, userid) {
     dispatch(receiveMsgList({chatMsgs, users, userid}))
   }
 }
+
+
+/*
+更新读取消息的异步 action
+*/
+export const readMsg = (userid) => {
+  return async (dispatch, getState) => {
+    const response = await reqReadChatMsg(userid);
+    const result = response.data;
+    if(result.code===0) {
+      const count = result.data;
+      const from = userid;
+      const to = getState().user._id;
+      dispatch(msgRead({from, to, count}));
+    }
+  }
+};

@@ -60,7 +60,7 @@ class Main extends Component{
     // 得到当前请求的 path
     const pathname = this.props.location.pathname;
 
-    const {user} = this.props;
+    const {user,unReadCount} = this.props;
 
     // 检查用户是否登录，若没有，转到登录界面
     if (!user._id){
@@ -101,7 +101,7 @@ class Main extends Component{
           <Route component={NotFound}/>
         </Switch>
 
-        {currentNav ? <NavFooter navList={this.navList}/> : null}
+        {currentNav ? <NavFooter navList={this.navList} unReadCount={unReadCount} /> : null}
       </div>
     );
 
@@ -110,5 +110,5 @@ class Main extends Component{
 }
 
 export default connect(
-  state => ({user:state.user}),
+  state => ({user:state.user,unReadCount:state.chat.unReadCount}),
 )(Main)

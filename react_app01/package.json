@@ -48,6 +48,7 @@
     "postcss-safe-parser": "4.0.1",
     "prop-types": "^15.7.2",
     "pubsub-js": "^1.8.0",
+    "rc-queue-anim": "^1.8.4",
     "react": "^16.13.1",
     "react-app-polyfill": "^1.0.6",
     "react-dev-utils": "^10.2.1",

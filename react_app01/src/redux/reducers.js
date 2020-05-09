@@ -63,14 +63,14 @@ const initChat = {
 function chat(state=initChat, action) {
   switch (action.type) {
     case RECEIVE_MSG:
-      var {chatMsg, userid} = action.data;
+      const {chatMsg} = action.data;
       return {
         chatMsgs: [...state.chatMsgs, chatMsg],
         users: state.users,
-        unReadCount: state.unReadCount + (!chatMsg.read && chatMsg.to===userid ? 1 : 0)
+        unReadCount: state.unReadCount + (!chatMsg.read && chatMsg.to===action.data.userid ? 1 : 0)
       };
     case RECEIVE_MSG_LIST:
-      var {chatMsgs, users, userid} = action.data
+      const {chatMsgs, users, userid} = action.data;
       return {
         chatMsgs,
         users,
@@ -79,11 +79,11 @@ function chat(state=initChat, action) {
         }, 0)
       };
     case MSG_READ:
-      const {count, from, to} = action.data
+      const {count, from, to} = action.data;
       return {
         chatMsgs: state.chatMsgs.map(msg => {
           if(msg.from===from && msg.to===to && !msg.read) {
-// msg.read = true // 不能直接修改状态
+            // msg.read = true // 不能直接修改状态
             return {...msg, read: true}
           } else {
             return msg
