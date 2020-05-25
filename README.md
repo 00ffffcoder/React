@@ -234,3 +234,9 @@ npm cache clean --force
 （1）新消息提示：显示某用户的未读消息数和总未读消息数；
 
 （2）boss/jobhunter主界面动画切入效果。
+
+### 20200522
+
+1. mongodb数据库
+
+   cmd管理员运行 ==> show dbs ==> use test ==> show collections ==> db.users.find()

@@ -16,7 +16,7 @@ export default function ajax(url='',data={},type='GET') {
       paramStr += key + '=' + data[key] + '&';
     });
     if (paramStr){
-      //去掉最后的‘&’
+      //去掉最后的‘&’。stringObject.substring(start,stop)：返回的子串包括 start 处的字符，但不包括 stop 处的字符。
       paramStr = paramStr.substring(0,paramStr.length-1);
     }
     //使用axios发送get请求

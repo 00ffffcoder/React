@@ -106,4 +106,4 @@ export default connect(
   state => ({user:state.user}),
   {register}
 )(Register)
-// 此时 Register 组件有两个属性，一个 state  ， 一个 register 请求注册的方法
+// 此时 Register 组件有两个属性，一个 state 对象 ， 一个 register 请求注册的异步action方法
